@@ -58,27 +58,6 @@ public class MainActivity extends Activity {
     private double MAGNITUDE_THRESHOLD = 10;
     private double sampleDoubleBuffer[];
 
-    private double maxValueF1 = 0;
-    private int frequencyF1 = 0;
-
-    private double maxValueR1 = 0;
-    private int frequencyR1 = 0;
-
-    private double maxValueR2 = 0;
-    private int frequencyR2 = 0;
-
-    private double maxValueR3 = 0;
-    private int frequencyR3 = 0;
-
-    private double maxValueR4 = 0;
-    private int frequencyR4 = 0;
-
-    private double maxValueF2 = 0;
-    private int frequencyF2 = 0;
-
-//    private Chronometer chrono;
-//    private long time = 0;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,14 +68,11 @@ public class MainActivity extends Activity {
         final TextView rec = (TextView) findViewById(R.id.recText); // Start/Stop Text
         final TextView freq = (TextView) findViewById(R.id.freq);   // Result in Hz
         final ProgressBar pB = (ProgressBar) findViewById(R.id.volume); // Voice Volume
-//        chrono =(Chronometer)findViewById(R.id.chrono); // Stopwatch, which shows the time while recording
 
         final ImageButton statusBtn = (ImageButton) findViewById(R.id.status); // Button to start and stop recording
         statusBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                chrono.setBase(SystemClock.elapsedRealtime()+time); // Reset of the chronometer
-//                chrono.start(); //Stopwatch starts
 
                 if (!isRecording) {
 
@@ -176,6 +152,77 @@ public class MainActivity extends Activity {
                 }
             }
 
+            public boolean isInRange(int x, int from, int to) {
+                return x >= from && x <= to;
+            }
+
+            public Point maxOfRange(int from, int to) {
+                double maxValue = 0;
+                int freq = 0;
+                int dataLength = (FRAMES_PER_BUFFER / 2) - 1;
+                for (int i = 0; i < dataLength; i++) {
+                    int frequency = (SAMPLE_RATE * i) / (FRAMES_PER_BUFFER * 2);
+                    if (isInRange(frequency, from, to) && magnitude[i] > maxValue) {
+                        maxValue = magnitude[i];
+                        freq = frequency;
+                    }
+                }
+
+                return new Point(freq, maxValue);
+            }
+
+            public boolean isMelonDiff(int f1, int f2) {
+                double diff = Math.abs(f1 - f2);
+                return diff >= 70 && diff <= 120;
+            }
+
+            public String finding() {
+                int f1;
+                int f2;
+
+                f1 = maxOfRange(120, 220).freqency;
+
+                if (isInRange(f1, 120, 170)) {
+                    f2 = maxOfRange(190, 290).freqency;
+                    if (isMelonDiff(f1, f2)) {
+                        return interpret(calFormula(f1, f2));
+                    }
+                }
+
+                if (isInRange(f1, 170, 220)) {
+                    f2 = maxOfRange(240, 340).freqency;
+                    if (isMelonDiff(f1, f2)) {
+                        return interpret(calFormula(f1, f2));
+                    }
+                }
+
+                if (isInRange(f1, 170, 220)) {
+                    f2 = maxOfRange(240, 340).freqency;
+                    if (isMelonDiff(f1, f2)) {
+                        return interpret(calFormula(f1, f2));
+                    }
+                }
+
+                f1 = maxOfRange(220, 320).freqency;
+
+                if (isInRange(f1, 221, 270)) {
+                    f2 = maxOfRange(340, 390).freqency;
+                    if (isMelonDiff(f1, f2)) {
+                        return interpret(calFormula(f1, f2));
+                    }
+                }
+
+                if (isInRange(f1, 270, 320)) {
+                    f2 = maxOfRange(390, 440).freqency;
+                    if (isMelonDiff(f1, f2)) {
+                        return interpret(calFormula(f1, f2));
+                    }
+                }
+
+                return "ไม่ใช่แตงโม";
+
+            }
+
             private void stopRecording() {
                 statusBtn.setImageResource(R.drawable.ic_record_audio); //Changes to Record Button
 //                chrono.stop(); // Chronometer stops
@@ -192,77 +239,8 @@ public class MainActivity extends Activity {
                     rec.setText("Start");//Change Text
                     rec.setTextColor(Color.parseColor("#ff00ff01")); // Change text-color
 
-//                    String out = "\n";
-//                    for (int i = 0; i < dataLength; i++) {
-//                        out += i + ": " + magnitude[i] + "\n";
-//                    }
-//
-//                    Log.d("out", out);
 
-                    maxValueF1=0; // Reset maxValueF1
-                    maxValueF2=0; // Reset maxValueF2
-                    maxValueR1=0;
-                    maxValueR2=0;
-                    maxValueR3=0;
-                    maxValueR4=0;
-
-                    //out += frequency + ", " + magnitude[i] + "\n";
-                    int dataLength = (FRAMES_PER_BUFFER / 2) - 1;
-                    for (int i = 0; i < dataLength; i++) {
-                        int frequency = (SAMPLE_RATE * i) / (FRAMES_PER_BUFFER * 2);
-
-                        if (frequency >= 0 && frequency <= 22000 && magnitude[i] > maxValueF1) {
-                            maxValueF1 = magnitude[i];
-                            frequencyF1 = frequency;
-                        }
-
-                        if (frequency >= 190 && frequency <= 290 && magnitude[i] > maxValueR1) {
-                            maxValueR1 = magnitude[i];
-                            frequencyR1 = frequency;
-                        }
-
-                        if (frequency >= 240 && frequency <= 340 && magnitude[i] > maxValueR2) {
-                            maxValueR2 = magnitude[i];
-                            frequencyR2 = frequency;
-                        }
-
-                        if (frequency >= 340 && frequency <= 390 && magnitude[i] > maxValueR3) {
-                            maxValueR3 = magnitude[i];
-                            frequencyR3 = frequency;
-                        }
-
-                        if (frequency >= 390 && frequency <= 440 && magnitude[i] > maxValueR4) {
-                            maxValueR4 = magnitude[i];
-                            frequencyR4 = frequency;
-                        }
-
-                    }
-
-                    String result = "";
-
-                    if (frequencyF1 >= 120 && frequencyF1 < 170) {
-                        frequencyF2 = frequencyR1;
-                        maxValueF2 = maxValueR1;
-                        double diff = Math.abs(frequencyF1 - frequencyF2);
-                        if (diff >= 70 && diff <= 120) {
-                            result = interpret(calFormula(frequencyF1, frequencyF2));
-                        } else {
-                            result = "ไม่ใช่แตงโม";
-                        }
-                    } else if (frequencyF1 >= 170 && frequencyF1 <= 220) {
-                        frequencyF2 = frequencyR2;
-                        maxValueF2 = maxValueR2;
-                        double diff = Math.abs(frequencyF1 - frequencyF2);
-                        if (diff >= 70 && diff <= 120) {
-                            result = interpret(calFormula(frequencyF1, frequencyF2));
-                        } else {
-                            result = "ไม่ใช่แตงโม";
-                        }
-                    } else if (frequencyF1 >= 221 && frequencyF1 <= 280) {
-                        result = "แตงโมดิบ";
-                    } else {
-                        result = "ไม่ใช่แตงโม";
-                    }
+                    String result = finding();
 
 
                     freq.setText(result); // Output of the recorded result
@@ -272,6 +250,8 @@ public class MainActivity extends Activity {
 
         });
     }
+
+
 
     //Converting the recorded shortbuffer to double values
     private void convertToDouble(short[] input, double[] output){
@@ -312,6 +292,16 @@ public class MainActivity extends Activity {
         super.onDestroy();
     }
 
+}
+
+class Point {
+    public int freqency;
+    public double amplitude;
+
+    public Point(int freqency, double amplitude) {
+        this.freqency = freqency;
+        this.amplitude = amplitude;
+    }
 }
 
 
