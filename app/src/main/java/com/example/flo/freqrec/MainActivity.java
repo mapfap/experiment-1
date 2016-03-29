@@ -1,26 +1,4 @@
-/*
-HAW Hamburg
-Media Systems
-SoSe 15
-Mobile Systeme
-Projekt: FreqRec
 
-von Florian Langhorst & Maximilian Schön
-
-FreqRec dient zur Aufnahme&Analyse von Audiofrequenzen
-
-Vorgehensweise:
-
-1. Start der App
-2. Drücken des Aufnahmebuttons
-3. Aufnahme des Tones für ca. 5 Sekunden
-4. Drücken des Stoppbuttons
-5. Gemessene Frequenz erscheint
-
-Quellen: Progressbar: http://developer.samsung.com/technical-doc/view.do?v=T000000086
-         FFT:http://wendykierp.github.io/JTransforms/apidocs/
-
- */
 package com.example.flo.freqrec;
 import android.app.Activity;
 import android.graphics.Color;
@@ -185,6 +163,7 @@ public class MainActivity extends Activity {
                 if (isInRange(f1, 120, 170)) {
                     f2 = maxOfRange(190, 290).freqency;
                     if (isMelonDiff(f1, f2)) {
+                        Log.d("case1-1", "f1=" + f1 + "|f2=" + f2);
                         return interpret(calFormula(f1, f2));
                     }
                 }
@@ -192,22 +171,18 @@ public class MainActivity extends Activity {
                 if (isInRange(f1, 170, 220)) {
                     f2 = maxOfRange(240, 340).freqency;
                     if (isMelonDiff(f1, f2)) {
+                        Log.d("case1-2", "f1=" + f1 + "|f2=" + f2);
                         return interpret(calFormula(f1, f2));
                     }
                 }
 
-                if (isInRange(f1, 170, 220)) {
-                    f2 = maxOfRange(240, 340).freqency;
-                    if (isMelonDiff(f1, f2)) {
-                        return interpret(calFormula(f1, f2));
-                    }
-                }
 
                 f1 = maxOfRange(220, 320).freqency;
 
                 if (isInRange(f1, 221, 270)) {
                     f2 = maxOfRange(340, 390).freqency;
                     if (isMelonDiff(f1, f2)) {
+                        Log.d("case2-1", "f1=" + f1 + "|f2=" + f2);
                         return interpret(calFormula(f1, f2));
                     }
                 }
@@ -215,6 +190,7 @@ public class MainActivity extends Activity {
                 if (isInRange(f1, 270, 320)) {
                     f2 = maxOfRange(390, 440).freqency;
                     if (isMelonDiff(f1, f2)) {
+                        Log.d("case2-2", "f1=" + f1 + "|f2=" + f2);
                         return interpret(calFormula(f1, f2));
                     }
                 }
@@ -262,6 +238,7 @@ public class MainActivity extends Activity {
     }
 
     public String interpret(double val) {
+        Log.d("ripe-value", "" + val);
         if (val > 3.6) {
             return "ดิบ";
         } else if (val > 3.2 && val <= 3.6) {
@@ -278,10 +255,14 @@ public class MainActivity extends Activity {
     }
 
     public double calFormula(int f1, int f2) {
-        double a = 86380.40465 * 10E-10;
-        double b = 123087.15045 * 10E-10;
-        double c = 175269.93248 * 10E-10;
-        double d = 1.82861 * 10E-10;
+//        double a = 86380.40465 * 10E-10;
+//        double b = 123087.15045 * 10E-10;
+//        double c = 175269.93248 * 10E-10;
+//        double d = 1.82861 * 10E-10;
+        double a = 8.64 * 10E-6;
+        double b = 1.23 * 10E-5;
+        double c = 1.75 * 10E-5;
+        double d = 1.83 * 10E-10;
         return a * (f1*f1) + b * (f1*f2) + c * (f2*f2) + d;
     }
     //Finishing the activity
