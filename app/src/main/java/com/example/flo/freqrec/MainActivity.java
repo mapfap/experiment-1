@@ -255,16 +255,13 @@ public class MainActivity extends Activity {
     }
 
     public double calFormula(int f1, int f2) {
-//        double a = 86380.40465 * 10E-10;
-//        double b = 123087.15045 * 10E-10;
-//        double c = 175269.93248 * 10E-10;
-//        double d = 1.82861 * 10E-10;
-        double a = 8.64 * 10E-6;
-        double b = 1.23 * 10E-5;
-        double c = 1.75 * 10E-5;
-        double d = 1.83 * 10E-10;
+        double a = 8.64 * 10E-7;
+        double b = 1.23 * 10E-6;
+        double c = 1.75 * 10E-6;
+        double d = 1.83 * 10E-11;
         return a * (f1*f1) + b * (f1*f2) + c * (f2*f2) + d;
     }
+
     //Finishing the activity
     @Override
     public void onDestroy() {
