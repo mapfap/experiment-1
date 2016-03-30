@@ -9,9 +9,9 @@
         android:id="@+id/volume"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:max="4000"
-        android:progressDrawable="@drawable/probar"
+        android:progressDrawable="@drawable/probar_black"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 

@@ -8,8 +8,10 @@ import android.util.Log;
 public class Prediction {
     public String result;
     public String details;
+    public int level;
 
-    public Prediction(String result, String details) {
+    public Prediction(int level, String result, String details) {
+        this.level = level;
         this.result = result;
         this.details = details;
     }

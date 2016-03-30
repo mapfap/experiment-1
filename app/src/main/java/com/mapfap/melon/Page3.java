@@ -112,6 +112,7 @@ public class Page3 extends Activity {
                     Intent myIntent = new Intent(Page3.this, Page4.class);
                     myIntent.putExtra("result", prediction.result);
                     myIntent.putExtra("details", prediction.details);
+                    myIntent.putExtra("level", prediction.level);
                     startActivity(myIntent);
                 }
             }.start();
