@@ -108,8 +108,10 @@ public class Page3 extends Activity {
                     stopRecording();
 
                     Predictor predictor = new Predictor(magnitude, SAMPLE_RATE, FRAMES_PER_BUFFER);
+                    Prediction prediction = predictor.predict();
                     Intent myIntent = new Intent(Page3.this, Page4.class);
-                    myIntent.putExtra("result", predictor.predict());
+                    myIntent.putExtra("result", prediction.result);
+                    myIntent.putExtra("details", prediction.details);
                     startActivity(myIntent);
                 }
             }.start();

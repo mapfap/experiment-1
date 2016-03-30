@@ -29,7 +29,7 @@ public class Predictor {
         return diff >= 70 && diff <= 120;
     }
 
-    public String predict() {
+    public Prediction predict() {
         int f1;
         int f2;
 
@@ -70,24 +70,24 @@ public class Predictor {
             }
         }
 
-        return "ไม่ใช่แตงโม";
+        return new Prediction("ไม่ใช่แตงโม", "โปรดตรวจสอบสิ่งที่ทำการเคาะว่าเป็นแตงโมหรือไม่\n กรุณาทำการเคาะอีกครั้ง");
 
     }
 
-    public String findRipeStatus(double val) {
+    public Prediction findRipeStatus(double val) {
         Log.d("ripe-value", "" + val);
         if (val > 3.6) {
-            return "ดิบ";
+            return new Prediction("ดิบ", "ดิบ ยังไม่เหมาะแก่การรับประทาน ควรเก็บแตงโมไว้อีก 3-5 วัน");
         } else if (val > 3.2 && val <= 3.6) {
-            return "เริ่มสุก";
+            return new Prediction("เริ่มสุก", "เริ่มสุก แตงโมยังสุกไม่เต็มที่ ควรเก็บไว้อีก 1-2 วัน");
         } else if (val > 2.7 && val <= 3.2) {
-            return "สุกพอดี";
+            return new Prediction("สุกพอดี", "สุกกำลังพอดี เนื้อแตงโมมีความกรอบกำลังพอดี เป็นแตงโมที่เหมาะแก่การรับประทานมากที่สุด");
         } else if (val > 2.4 && val <= 2.7) {
-            return "แก่";
+            return new Prediction("แก่", "สุกเกินไป สามารถรับประทานได้ แต่เนื้อแตงโมอาจมีความกรอบน้อย");
         } else if (val <= 2.4) {
-            return "เน่า";
+            return new Prediction("เน่า", "ไส้ล้มหรือไส้แตก แตงโมในลักษณะนี้ไม่เหมาะแก่การรับประทาน");
         } else {
-            return "";
+            return new Prediction("?", "เกิดข้อผิดพลาด กรุณาลองอีกครั้ง");
         }
     }
 
