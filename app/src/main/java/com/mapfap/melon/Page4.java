@@ -30,8 +30,8 @@ public class Page4 extends Activity {
         editText.setText(details);
         editText.setKeyListener(null);
 
-        ImageView imageView = (ImageView) findViewById(R.id.imageViewResult);
-        Picasso.with(this).load(R.drawable.resul200).fit().centerCrop().into(imageView);
+//        ImageView imageView = (ImageView) findViewById(R.id.imageViewResult);
+//        Picasso.with(this).load(R.drawable.resul200).fit().centerCrop().into(imageView);
 
         Button button = (Button) findViewById(R.id.buttonRestart);
         button.setOnClickListener(new View.OnClickListener() {
