@@ -25,6 +25,7 @@ public class Page3 extends Activity {
     private AudioRecord audioRecord;
     private DoubleFFT_1D fft;
     private Thread recordingThread;
+    private CountDownTimer timer;
     private boolean isRecording = false;
 
     private final int SAMPLE_RATE = 44100;
@@ -99,11 +100,12 @@ public class Page3 extends Activity {
             });
             recordingThread.start();
 
-            new CountDownTimer(6000, 1000) {
+            timer = new CountDownTimer(6000, 1000) {
                 public void onTick(long millisUntilFinished) {
                     rec.setText("" + millisUntilFinished / 1000);
                 }
 
+                @Override
                 public void onFinish() {
                     stopRecording();
 
@@ -120,15 +122,14 @@ public class Page3 extends Activity {
     }
 
     private void stopRecording() {
-        if (null != audioRecord) {
-            isRecording = false;
-            try {
-                recordingThread.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        isRecording = false;
+        try {
+            timer.cancel();
+            recordingThread.interrupt();
             recordingThread = null;
             audioRecord.stop();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -137,6 +138,12 @@ public class Page3 extends Activity {
         for (int i = 0; i < input.length; i++) {
             output[i] = input[i] * scale;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        stopRecording();
     }
 
     @Override
