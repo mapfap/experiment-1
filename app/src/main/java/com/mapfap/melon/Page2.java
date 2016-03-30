@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
@@ -17,10 +19,11 @@ public class Page2 extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page2);
-        ImageButton imageButton = (ImageButton) findViewById(R.id.imageButton2);
-        Picasso.with(this).load(R.drawable.howto).fit().centerCrop().into(imageButton);
+        ImageView imageView = (ImageView) findViewById(R.id.imageButton2);
+        Picasso.with(this).load(R.drawable.howto).fit().centerCrop().into(imageView);
 
-        imageButton.setOnClickListener(new View.OnClickListener() {
+        Button button = (Button) findViewById(R.id.buttonStart);
+        button.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {

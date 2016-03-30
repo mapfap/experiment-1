@@ -3,7 +3,7 @@
     android:layout_height="match_parent"
     android:background="#ffffff">
 
-    <ImageButton
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY"
@@ -14,8 +14,11 @@
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="200px"
+        android:layout_height="80dp"
         android:text="เริ่ม"
-        android:id="@+id/button"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:typeface="monospace"
+        android:id="@+id/buttonStart"
         android:layout_gravity="bottom" />
 </FrameLayout>

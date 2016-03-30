@@ -2,10 +2,12 @@ package com.mapfap.melon;
 
 import android.util.Log;
 
+import java.io.Serializable;
+
 /**
  * Created by mapfap on 3/30/16.
  */
-public class Interpreter {
+public class Predictor {
 
     private static final double A = 8.64 * 10E-7;
     private static final double B = 1.23 * 10E-6;
@@ -16,7 +18,7 @@ public class Interpreter {
     private int sampleRate;
     private int framePerBuffer;
 
-    public Interpreter(double[] magnitude, int sampleRate, int framePerBuffer) {
+    public Predictor(double[] magnitude, int sampleRate, int framePerBuffer) {
         this.magnitude = magnitude;
         this.sampleRate = sampleRate;
         this.framePerBuffer = framePerBuffer;
@@ -27,7 +29,7 @@ public class Interpreter {
         return diff >= 70 && diff <= 120;
     }
 
-    public String finding() {
+    public String predict() {
         int f1;
         int f2;
 
@@ -37,7 +39,7 @@ public class Interpreter {
             f2 = maxOfRange(190, 290).freqency;
             if (isMelonDiff(f1, f2)) {
                 Log.d("case1-1", "f1=" + f1 + "|f2=" + f2);
-                return interpret(calFormula(f1, f2));
+                return findRipeStatus(calFormula(f1, f2));
             }
         }
 
@@ -45,7 +47,7 @@ public class Interpreter {
             f2 = maxOfRange(240, 340).freqency;
             if (isMelonDiff(f1, f2)) {
                 Log.d("case1-2", "f1=" + f1 + "|f2=" + f2);
-                return interpret(calFormula(f1, f2));
+                return findRipeStatus(calFormula(f1, f2));
             }
         }
 
@@ -56,7 +58,7 @@ public class Interpreter {
             f2 = maxOfRange(340, 390).freqency;
             if (isMelonDiff(f1, f2)) {
                 Log.d("case2-1", "f1=" + f1 + "|f2=" + f2);
-                return interpret(calFormula(f1, f2));
+                return findRipeStatus(calFormula(f1, f2));
             }
         }
 
@@ -64,7 +66,7 @@ public class Interpreter {
             f2 = maxOfRange(390, 440).freqency;
             if (isMelonDiff(f1, f2)) {
                 Log.d("case2-2", "f1=" + f1 + "|f2=" + f2);
-                return interpret(calFormula(f1, f2));
+                return findRipeStatus(calFormula(f1, f2));
             }
         }
 
@@ -72,7 +74,7 @@ public class Interpreter {
 
     }
 
-    public String interpret(double val) {
+    public String findRipeStatus(double val) {
         Log.d("ripe-value", "" + val);
         if (val > 3.6) {
             return "ดิบ";

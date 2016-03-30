@@ -1,7 +1,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff">
+    android:background="#ffffff"
+    android:orientation="vertical"
+    >
 
     <ProgressBar
         android:id="@+id/volume"
@@ -15,28 +17,31 @@
 
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/recText"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:text="5"
+        android:gravity="center"
         android:textColor="#000000"
-        android:textSize="25sp"
+        android:textSize="300sp"
         android:textStyle="bold"
         android:typeface="monospace" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:text="เคาะแตงโม"
+        android:gravity="center"
         android:textColor="#000000"
         android:textSize="25sp"
         android:textStyle="bold"
-        android:typeface="monospace" />
+        android:typeface="monospace"
+         />
 
 </LinearLayout>
